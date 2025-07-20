@@ -12,24 +12,29 @@ func (c *Client) GetLocations(pageURL *string) (resource, error) {
 		url = *pageURL
 	}
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return resource{}, err
-	}
+	dat, ok := c.cache.Get(url)
+	if !ok {
+		req, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			return resource{}, err
+		}
 
-	resp, err := c.httpClient.Do(req)
-	if err != nil {
-		return resource{}, err
-	}
-	defer resp.Body.Close()
+		resp, err := c.httpClient.Do(req)
+		if err != nil {
+			return resource{}, err
+		}
+		defer resp.Body.Close()
 
-	dat, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return resource{}, err
+		datNew, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return resource{}, err
+		}
+		dat = datNew
+		c.cache.Add(url, dat)
 	}
 
 	locationsResp := resource{}
-	err = json.Unmarshal(dat, &locationsResp)
+	err := json.Unmarshal(dat, &locationsResp)
 	if err != nil {
 		return resource{}, err
 	}
