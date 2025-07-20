@@ -11,7 +11,8 @@ func main() {
 	const cacheTime = 5 * time.Minute
 	pokeClient := pokeapi.NewClient(timeOut, cacheTime)
 	cfg := &config{
-		client: pokeClient,
+		client:  pokeClient,
+		pokemon: make(map[string]pokeapi.Pokemon),
 	}
 
 	Start(cfg)

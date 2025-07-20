@@ -33,6 +33,11 @@ func makeCommands() map[string]cliCommand {
 			description: "Lists Pokemon found at <location>",
 			callback:    commandExplore,
 		},
+		"catch": {
+			name:        "catch <pokemon>",
+			description: "Attempts to catch <pokemon>",
+			callback:    commandCatch,
+		},
 	}
 	return commands
 }
