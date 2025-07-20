@@ -21,11 +21,21 @@ func Start(cfg *config) {
 		}
 
 		command := words[0]
-		cliComm, ok := commands[command]
-		if !ok {
+		args := []string{}
+		if len(words) > 1 {
+			args = words[1:]
+		}
+
+		cliComm, exists := commands[command]
+		if !exists {
 			fmt.Println("Unknown command")
+			continue
 		} else {
-			cliComm.callback(cfg)
+			err := cliComm.callback(cfg, args...)
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
 		}
 	}
 }

@@ -4,12 +4,12 @@ import (
 	"fmt"
 )
 
-func commandHelp(cfg *config) error {
+func commandHelp(cfg *config, args ...string) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Print("Usage:\n\n")
 	commands := makeCommands()
-	for comm, cliComm := range commands {
-		fmt.Printf("%s: %s\n", comm, cliComm.description)
+	for _, cliComm := range commands {
+		fmt.Printf("%s: %s\n", cliComm.name, cliComm.description)
 	}
 	return nil
 }
