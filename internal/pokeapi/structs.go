@@ -331,20 +331,24 @@ type Pokemon struct {
 			} `json:"generation-viii"`
 		} `json:"versions"`
 	} `json:"sprites"`
-	Stats []struct {
-		BaseStat int `json:"base_stat"`
-		Effort   int `json:"effort"`
-		Stat     struct {
-			Name string `json:"name"`
-			URL  string `json:"url"`
-		} `json:"stat"`
-	} `json:"stats"`
-	Types []struct {
-		Slot int `json:"slot"`
-		Type struct {
-			Name string `json:"name"`
-			URL  string `json:"url"`
-		} `json:"type"`
-	} `json:"types"`
-	Weight int `json:"weight"`
+	Stats  []PKStat `json:"stats"`
+	Types  []PKType `json:"types"`
+	Weight int      `json:"weight"`
+}
+
+type PKStat struct {
+	BaseStat int `json:"base_stat"`
+	Effort   int `json:"effort"`
+	Stat     struct {
+		Name string `json:"name"`
+		URL  string `json:"url"`
+	} `json:"stat"`
+}
+
+type PKType struct {
+	Slot int `json:"slot"`
+	Type struct {
+		Name string `json:"name"`
+		URL  string `json:"url"`
+	} `json:"type"`
 }
